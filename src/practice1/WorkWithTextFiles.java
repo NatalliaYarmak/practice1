@@ -1,5 +1,7 @@
 package practice1;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class WorkWithTextFiles {
@@ -21,7 +23,23 @@ public class WorkWithTextFiles {
 				System.out.println("Number of lines cannot be parsed. Default value will used.");
 			}
 		scanner.close();
-		System.out.println(filePath);
-		System.out.println(lineNumber);
+		readLinesFromFile(filePath, lineNumber);
+	}
+	
+	public static void readLinesFromFile(String filePath, int lineNumber) {
+		Scanner scanner;
+		try {
+			scanner = new Scanner (new File(filePath));
+			int i = 0;
+			while (scanner.hasNext() && i < lineNumber){
+				i++;
+				System.out.println(scanner.nextLine());		
+			}
+			if (i != lineNumber)
+				System.out.println("File " + filePath + " contains less than " + lineNumber + " lines");
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("File " + filePath + " is not found.");
+		}
 	}
 }
